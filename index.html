@@ -19,7 +19,54 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <!-- Navigation Bar -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="#home" class="logo-link">
+                    <!-- Simple book SVG icon (temporary) -->
+                    <svg class="logo-img" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                    </svg>
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" class="nav-item active">Home</a></li>
+                    <li><a href="#about" class="nav-item">About</a></li>
+                    <li><a href="#reviews" class="nav-item">Reviews</a></li>
+                    <li><a href="#quotes" class="nav-item">Quotes</a></li>
+                    <li><a href="#journal" class="nav-item">Journal</a></li>
+                    <li><a href="#community" class="nav-item">Community</a></li>
+                    <li><a href="#contact" class="nav-item">Contact</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="search books, authors, articles" id="searchInput" />
+                        <button class="search-btn" aria-label="Search">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        </button>
+                    </div>
+                    <button id="authBtn" class="btn-outline">Login</button>
+                </div>
+
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Page sections (placeholders for now) -->
+        <section id="home" class="page active">Home (coming soon)</section>
+        <section id="about" class="page">About</section>
+        <section id="reviews" class="page">Reviews</section>
+        <section id="quotes" class="page">Quotes</section>
+        <section id="journal" class="page">Journal</section>
+        <section id="community" class="page">Community</section>
+        <section id="contact" class="page">Contact</section>
+
+        <footer class="main-footer">Footer (coming soon)</footer>
+    </div>
 
     <script src="firebase.js"></script>
     <script src="app.js"></script>

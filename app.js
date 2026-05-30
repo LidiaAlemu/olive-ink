@@ -1,29 +1,64 @@
-// ===== Simple SPA Router =====
+// ===== SPA Router with dynamic page loading =====
 document.addEventListener('DOMContentLoaded', () => {
     initRouting();
     initMobileMenu();
     initAuthUI();
+    // Preload the home page content
+    loadPageContent('home');
 });
 
 function initRouting() {
-    window.addEventListener('hashchange', route);
-    route();
+    window.addEventListener('hashchange', () => {
+        const hash = location.hash.slice(1) || 'home';
+        loadPageContent(hash);
+    });
 }
 
-function route() {
-    const hash = location.hash.slice(1) || 'home';
+async function loadPageContent(pageName) {
+    // Hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const target = document.getElementById(hash);
-    if (target) {
-        target.classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(link => {
-            const href = link.getAttribute('href').substring(1);
-            link.classList.toggle('active', href === hash);
-        });
-        window.scrollTo(0, 0);
-    } else {
+    const target = document.getElementById(pageName);
+    if (!target) {
+        // fallback to home
         document.getElementById('home').classList.add('active');
+        return;
     }
+
+    // If the page hasn't been loaded yet, fetch it
+    if (!target.dataset.loaded) {
+        try {
+            const response = await fetch(`pages/${pageName}.html`);
+            if (!response.ok) throw new Error('Page not found');
+            const html = await response.text();
+            target.innerHTML = html;
+            target.dataset.loaded = 'true';
+            // Execute any <script> tags inside the loaded content
+            executeScripts(target);
+        } catch (err) {
+            target.innerHTML = '<p style="text-align:center;padding:4rem;">Page not found.</p>';
+        }
+    }
+    target.classList.add('active');
+
+    // Update active nav link
+    document.querySelectorAll('.nav-item').forEach(link => {
+        const href = link.getAttribute('href').substring(1);
+        link.classList.toggle('active', href === pageName);
+    });
+    window.scrollTo(0, 0);
+}
+
+function executeScripts(container) {
+    const scripts = container.querySelectorAll('script');
+    scripts.forEach(oldScript => {
+        const newScript = document.createElement('script');
+        // Copy all attributes
+        Array.from(oldScript.attributes).forEach(attr => {
+            newScript.setAttribute(attr.name, attr.value);
+        });
+        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
 }
 
 function initMobileMenu() {

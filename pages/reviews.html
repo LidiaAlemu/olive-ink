@@ -1,0 +1,152 @@
+<!-- Reviews header with images r1.png and r2.png -->
+<div class="reviews-header">
+    <div class="reviews-header-images">
+        <img src="images/r1.png" alt="" class="reviews-header-left" />
+        <img src="images/r2.png" alt="" class="reviews-header-right" />
+    </div>
+    <div class="reviews-header-content">
+        <h1 class="reviews-title">FULL REVIEW COLLECTION</h1>
+        <p class="reviews-subtitle">A library of thoughts, for every story told.</p>
+    </div>
+</div>
+
+<!-- Main reviews layout with filter sidebar -->
+<div class="reviews-container">
+    <!-- Filter sidebar on the right -->
+    <aside class="reviews-filters">
+        <h3 class="filter-heading">Sort by</h3>
+        <div class="filter-group">
+            <p class="filter-label">Star Rating</p>
+            <div class="star-filter" id="starFilter">
+                <span data-stars="5" class="star-btn">★★★★★</span>
+                <span data-stars="4" class="star-btn">★★★★☆</span>
+                <span data-stars="3" class="star-btn">★★★☆☆</span>
+                <span data-stars="2" class="star-btn">★★☆☆☆</span>
+                <span data-stars="1" class="star-btn">★☆☆☆☆</span>
+            </div>
+        </div>
+        <div class="filter-group">
+            <label for="genreFilter" class="filter-label">Genre</label>
+            <select id="genreFilter" class="filter-select">
+                <option value="all">All Genres</option>
+                <option value="fantasy">Fantasy</option>
+                <option value="mystery-thriller">Mystery / Thriller</option>
+                <option value="romance">Romance</option>
+                <option value="science-fiction">Science Fiction</option>
+                <option value="horror">Horror</option>
+                <option value="historical-fiction">Historical Fiction</option>
+                <option value="self-help">Self-Help</option>
+                <option value="philosophy">Philosophy</option>
+                <option value="classics">Classics</option>
+                <option value="young-adult">Young Adult (YA)</option>
+                <option value="contemporary-fiction">Contemporary Fiction</option>
+                <option value="adventure">Adventure</option>
+                <option value="psychological-fiction">Psychological Fiction</option>
+                <option value="cozy-fiction">Cozy Fiction</option>
+                <option value="dark-academia">Dark Academia</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <button id="recentBtn" class="filter-btn active">Most Recent</button>
+        </div>
+    </aside>
+
+    <!-- Book cards grid -->
+    <div class="reviews-book-grid" id="reviewsGrid"></div>
+</div>
+
+<!-- Pagination -->
+<div class="pagination" id="reviewsPagination">
+    <button class="page-btn" id="prevPage">Previous</button>
+    <div class="page-numbers" id="pageNumbers"></div>
+    <button class="page-btn" id="nextPage">Next</button>
+</div>
+
+<script>
+    // This script runs after the reviews page content is loaded.
+    (function() {
+        const books = [
+            { title: "Powerless", author: "Lauren Roberts", rating: 4.8, genre: "fantasy", cover: "images/covers/powerless.jpg" },
+            { title: "The Silent Patient", author: "Alex Michaelides", rating: 4.7, genre: "mystery-thriller", cover: "images/covers/the-silent-patient.jpg" },
+            { title: "Pride and Prejudice", author: "Jane Austen", rating: 4.8, genre: "romance", cover: "images/covers/pride-and-prejudice.jpg" },
+            { title: "Dune", author: "Frank Herbert", rating: 4.8, genre: "science-fiction", cover: "images/covers/dune.jpg" },
+            { title: "Dracula", author: "Bram Stoker", rating: 4.6, genre: "horror", cover: "images/covers/dracula.jpg" },
+            { title: "The Book Thief", author: "Markus Zusak", rating: 4.7, genre: "historical-fiction", cover: "images/covers/the-book-thief.jpg" },
+            { title: "Atomic Habits", author: "James Clear", rating: 4.5, genre: "self-help", cover: "images/covers/atomic-habits.jpg" },
+            { title: "Meditations", author: "Marcus Aurelius", rating: 4.6, genre: "philosophy", cover: "images/covers/meditations.jpg" },
+            { title: "Jane Eyre", author: "Charlotte Brontë", rating: 4.7, genre: "classics", cover: "images/covers/jane-eyre.jpg" },
+            { title: "Six of Crows", author: "Leigh Bardugo", rating: 4.5, genre: "young-adult", cover: "images/covers/six-of-crows.jpg" },
+            { title: "Normal People", author: "Sally Rooney", rating: 4.4, genre: "contemporary-fiction", cover: "images/covers/normal-people.jpg" },
+            { title: "Treasure Island", author: "Robert Louis Stevenson", rating: 4.3, genre: "adventure", cover: "images/covers/treasure-island.jpg" },
+            { title: "Crime and Punishment", author: "Fyodor Dostoevsky", rating: 4.5, genre: "psychological-fiction", cover: "images/covers/crime-and-punishment.jpg" },
+            { title: "The House in the Cerulean Sea", author: "TJ Klune", rating: 4.7, genre: "cozy-fiction", cover: "images/covers/the-house-in-the-cerulean-sea.jpg" },
+            { title: "The Secret History", author: "Donna Tartt", rating: 4.6, genre: "dark-academia", cover: "images/covers/the-secret-history.jpg" }
+        ];
+        const booksPerPage = 10;
+        let currentPage = 1;
+        const grid = document.getElementById('reviewsGrid');
+        const prevBtn = document.getElementById('prevPage');
+        const nextBtn = document.getElementById('nextPage');
+        const pageNumbers = document.getElementById('pageNumbers');
+
+        function renderBooks(page) {
+            grid.innerHTML = '';
+            const start = (page - 1) * booksPerPage;
+            const end = start + booksPerPage;
+            const pageBooks = books.slice(start, end);
+            pageBooks.forEach(book => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="card-info">
+                        <h3 class="card-title">${book.title}</h3>
+                        <p class="card-author">by ${book.author}</p>
+                        <div class="card-rating">${'★'.repeat(Math.floor(book.rating))}${book.rating % 1 ? '½' : ''} ${book.rating}</div>
+                        <hr class="card-divider" />
+                        <span class="card-genre">${book.genre}</span>
+                        <a href="#review/${book.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z-]/g, '')}" class="card-review-btn">Read Full Review</a>
+                    </div>
+                    <div class="card-cover"><img src="${book.cover}" alt="${book.title} cover" /></div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(books.length / booksPerPage);
+            pageNumbers.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const pageNum = document.createElement('span');
+                pageNum.className = 'page-num' + (i === currentPage ? ' active' : '');
+                pageNum.textContent = i;
+                pageNum.addEventListener('click', () => {
+                    currentPage = i;
+                    renderBooks(currentPage);
+                    updatePagination();
+                });
+                pageNumbers.appendChild(pageNum);
+            }
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderBooks(currentPage);
+                updatePagination();
+            }
+        });
+        nextBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(books.length / booksPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderBooks(currentPage);
+                updatePagination();
+            }
+        });
+
+        renderBooks(1);
+        updatePagination();
+    })();
+</script>

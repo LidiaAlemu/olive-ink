@@ -15,7 +15,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 
-    <!-- Our CSS -->
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -28,7 +27,6 @@
                         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
                     </svg>
                 </a>
-
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#home" class="nav-item active">Home</a></li>
                     <li><a href="#about" class="nav-item">About</a></li>
@@ -38,7 +36,6 @@
                     <li><a href="#community" class="nav-item">Community</a></li>
                     <li><a href="#contact" class="nav-item">Contact</a></li>
                 </ul>
-
                 <div class="nav-actions">
                     <div class="search-container">
                         <input type="text" class="search-input" placeholder="search books, authors, articles" id="searchInput" />
@@ -48,7 +45,6 @@
                     </div>
                     <button id="authBtn" class="btn-outline">Login</button>
                 </div>
-
                 <button class="hamburger" id="hamburger" aria-label="Menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -57,17 +53,13 @@
 
         <!-- HOME PAGE -->
         <section id="home" class="page active">
-            <!-- HERO (slightly darker, smaller, with elegant thin rule) -->
+            <!-- HERO -->
             <div class="hero">
-                <!-- Images layer (vase left, books right) -->
                 <div class="hero-images">
                     <img src="vase.png" alt="Dark ceramic vase with dried branch" class="hero-vase" />
                     <img src="book.png" alt="Antique books still life" class="hero-books" />
                 </div>
-
-                <!-- Centered content -->
                 <div class="hero-content">
-                    <!-- Thin elegant horizontal rule -->
                     <div class="ornament">
                         <span class="ornament-diamond"></span>
                     </div>
@@ -80,21 +72,112 @@
                 </div>
             </div>
 
-            <!-- FEATURED REVIEWS (placeholder) -->
-            <section class="featured-reviews" style="padding:3rem 2rem;">
-                <h2 style="text-align:center;font-family:var(--font-heading);margin-bottom:2rem;">FEATURED REVIEWS</h2>
-                <p style="text-align:center;">(Cards coming soon)</p>
+            <!-- FEATURED REVIEWS -->
+            <section class="featured-reviews">
+                <h2 class="section-heading">FEATURED REVIEWS</h2>
+                <div class="review-cards-grid">
+                    <!-- Card 1: Powerless -->
+                    <div class="review-card">
+                        <div class="card-info">
+                            <h3 class="card-title">Powerless</h3>
+                            <p class="card-author">by Lauren Roberts</p>
+                            <div class="card-rating">★★★★★ 4.8</div>
+                            <hr class="card-divider" />
+                            <p class="card-desc">A gripping tale of power, secrets and survival in a world that steals abilities.</p>
+                            <span class="card-genre">Fantasy</span>
+                        </div>
+                        <div class="card-cover">
+                            <img src="https://covers.openlibrary.org/b/isbn/9781665962580-L.jpg" alt="Powerless cover" />
+                        </div>
+                    </div>
+
+                    <!-- Card 2: The Silent Patient -->
+                    <div class="review-card">
+                        <div class="card-info">
+                            <h3 class="card-title">The Silent Patient</h3>
+                            <p class="card-author">by Alex Michaelides</p>
+                            <div class="card-rating">★★★★★ 4.7</div>
+                            <hr class="card-divider" />
+                            <p class="card-desc">A shocking twisty thriller that will keep you guessing until the very end.</p>
+                            <span class="card-genre">Mystery / Thriller</span>
+                        </div>
+                        <div class="card-cover">
+                            <img src="https://covers.openlibrary.org/b/isbn/9781250301697-L.jpg" alt="The Silent Patient cover" />
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Pride and Prejudice -->
+                    <div class="review-card">
+                        <div class="card-info">
+                            <h3 class="card-title">Pride and Prejudice</h3>
+                            <p class="card-author">by Jane Austen</p>
+                            <div class="card-rating">★★★★★ 4.8</div>
+                            <hr class="card-divider" />
+                            <p class="card-desc">A timeless romance about love, pride, and second chances.</p>
+                            <span class="card-genre">Romance</span>
+                        </div>
+                        <div class="card-cover">
+                            <img src="https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg" alt="Pride and Prejudice cover" />
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Dune -->
+                    <div class="review-card">
+                        <div class="card-info">
+                            <h3 class="card-title">Dune</h3>
+                            <p class="card-author">by Frank Herbert</p>
+                            <div class="card-rating">★★★★★ 4.8</div>
+                            <hr class="card-divider" />
+                            <p class="card-desc">An epic science fiction masterpiece of politics, power, and destiny.</p>
+                            <span class="card-genre">Science Fiction</span>
+                        </div>
+                        <div class="card-cover">
+                            <img src="https://covers.openlibrary.org/b/isbn/9780441013593-L.jpg" alt="Dune cover" />
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Dracula -->
+                    <div class="review-card">
+                        <div class="card-info">
+                            <h3 class="card-title">Dracula</h3>
+                            <p class="card-author">by Bram Stoker</p>
+                            <div class="card-rating">★★★★★ 4.6</div>
+                            <hr class="card-divider" />
+                            <p class="card-desc">The original vampire tale that continues to haunt generations.</p>
+                            <span class="card-genre">Horror</span>
+                        </div>
+                        <div class="card-cover">
+                            <img src="https://covers.openlibrary.org/b/isbn/9780141439846-L.jpg" alt="Dracula cover" />
+                        </div>
+                    </div>
+
+                    <!-- Card 6: The Book Thief -->
+                    <div class="review-card">
+                        <div class="card-info">
+                            <h3 class="card-title">The Book Thief</h3>
+                            <p class="card-author">by Markus Zusak</p>
+                            <div class="card-rating">★★★★★ 4.7</div>
+                            <hr class="card-divider" />
+                            <p class="card-desc">A heartbreaking story of words, courage, and humanity.</p>
+                            <span class="card-genre">Historical Fiction</span>
+                        </div>
+                        <div class="card-cover">
+                            <img src="https://covers.openlibrary.org/b/isbn/9780375842207-L.jpg" alt="The Book Thief cover" />
+                        </div>
+                    </div>
+                </div>
+                <a href="#reviews" class="view-all">View All Reviews <span class="arrow">→</span></a>
             </section>
 
             <!-- BROWSE BY GENRE (placeholder) -->
-            <section class="browse-genre" style="padding:2rem;">
-                <h2 style="text-align:center;">BROWSE BY GENRE</h2>
+            <section class="browse-genre">
+                <h2 class="section-heading">BROWSE BY GENRE</h2>
                 <p style="text-align:center;">(Genre buttons coming soon)</p>
             </section>
 
             <!-- FROM THE JOURNAL (placeholder) -->
-            <section class="from-journal" style="padding:2rem;">
-                <h2 style="text-align:center;">FROM THE JOURNAL</h2>
+            <section class="from-journal">
+                <h2 class="section-heading">FROM THE JOURNAL</h2>
                 <p style="text-align:center;">(Journal cards coming soon)</p>
             </section>
         </section>

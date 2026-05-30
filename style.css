@@ -236,6 +236,30 @@ img { max-width:100%; height:auto; display:block; }
   align-self: flex-start;
 }
 
+/* Read Full Review button – bubbly style */
+.card-review-btn {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.35rem 1.2rem;
+  border-radius: 20px;
+  background: var(--wine-700);
+  border: 1px solid rgba(183,154,99,0.3);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  transition: var(--transition);
+  align-self: flex-start;
+  text-transform: uppercase;
+}
+
+.card-review-btn:hover {
+  background: var(--wine-800);
+  border-color: var(--gold-500);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
 .card-cover {
   width: 120px;
   flex-shrink: 0;

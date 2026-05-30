@@ -1,4 +1,4 @@
-/* ===== CSS CUSTOM PROPERTIES (EXACT PALETTE) ===== */
+/* ===== CSS CUSTOM PROPERTIES (VINTAGE OLIVE & WINE) ===== */
 :root {
   /* Olive background shades */
   --olive-900: #252813;
@@ -35,16 +35,16 @@
   box-sizing: border-box;
 }
 
-/* ===== BODY BACKGROUND ===== */
+/* ===== BODY BACKGROUND (less bright centre, vintage warmth) ===== */
 body {
   font-family: var(--font-body);
-  /* Your exact radial gradient – brighter in the centre */
+  /* Darker, more muted centre – olive gradient */
   background:
     radial-gradient(
       ellipse at center,
-      #3D4022 0%,
-      #34371D 25%,
-      #2B2B16 55%,
+      #36381E 0%,
+      #2E3019 30%,
+      #2B2B16 60%,
       #252813 100%
     );
   color: var(--cream);
@@ -52,7 +52,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Dark vignette overlay */
+/* Warm vintage vignette overlay */
 body::before {
   content: "";
   position: fixed;
@@ -61,13 +61,13 @@ body::before {
     radial-gradient(
       circle,
       transparent 45%,
-      rgba(0,0,0,0.18) 100%
+      rgba(183,154,99,0.06) 100%    /* gentle gold edge */
     );
   pointer-events: none;
   z-index: 0;
 }
 
-/* Ensure content sits above vignette */
+/* Make sure all content sits above vignette */
 #app {
   position: relative;
   z-index: 1;
@@ -88,9 +88,10 @@ a {
 img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 
-/* Scrollbar styling */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--olive-900); }
 ::-webkit-scrollbar-thumb { background: var(--gold-500); border-radius: 3px; }
@@ -100,7 +101,6 @@ img {
   position: sticky;
   top: 0;
   z-index: 1000;
-  /* Wine gradient across the navbar */
   background:
     linear-gradient(
       90deg,
@@ -275,9 +275,8 @@ img {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== HERO (blends with body background) ===== */
+/* ===== HERO (transparent PNG images, no quote) ===== */
 .hero {
-  /* No separate background – inherits body radial gradient */
   position: relative;
   min-height: 90vh;
   width: 100%;
@@ -286,45 +285,46 @@ img {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  /* background comes from body, so images sit directly on olive gradient */
 }
 
-/* Floating quote */
-.hero-quote {
+/* Container for the two transparent PNGs */
+.hero-images {
   position: absolute;
-  top: 15%;
+  inset: 0;
+  pointer-events: none;  /* allow clicks through to buttons */
+  z-index: 0;
+}
+
+/* Left vase */
+.hero-vase {
+  position: absolute;
   left: 5%;
-  max-width: 300px;
-  background: rgba(0,0,0,0.15);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(183,154,99,0.55);
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: var(--shadow-soft);
-  z-index: 2;
+  bottom: 10%;
+  max-height: 65%;
+  max-width: 30%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(0,0,0,0.5));
 }
 
-.hero-quote blockquote p {
-  font-family: var(--font-decor);
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--cream);
-  line-height: 1.6;
-  margin-bottom: 0.5rem;
+/* Right book still life */
+.hero-books {
+  position: absolute;
+  right: 5%;
+  bottom: 8%;
+  max-height: 70%;
+  max-width: 35%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(0,0,0,0.5));
 }
 
-.hero-quote blockquote cite {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--gold-500);
-  font-style: normal;
-}
-
-/* Centered content */
+/* Centred content (over images) */
 .hero-content {
   text-align: center;
   z-index: 3;
   padding: 0 2rem;
   max-width: 700px;
+  position: relative;
 }
 
 .ornament {
@@ -408,12 +408,17 @@ img {
 
 /* ===== RESPONSIVE HERO ===== */
 @media (max-width: 768px) {
-  .hero-quote {
-    position: relative;
-    top: auto;
-    left: auto;
-    margin: 2rem 1rem 0;
-    max-width: 100%;
+  .hero-vase {
+    left: 2%;
+    bottom: 5%;
+    max-height: 45%;
+    max-width: 40%;
+  }
+  .hero-books {
+    right: 2%;
+    bottom: 5%;
+    max-height: 50%;
+    max-width: 45%;
   }
   .hero {
     min-height: 100vh;

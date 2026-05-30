@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initRouting();
     initMobileMenu();
     initAuthUI();
-    // Preload the home page content
+    // Load the initial page
     loadPageContent('home');
 });
 
@@ -15,11 +15,15 @@ function initRouting() {
 }
 
 async function loadPageContent(pageName) {
+    // Handle review detail pages (e.g., #review/powerless)
+    if (pageName.startsWith('review/')) {
+        pageName = 'review-detail';
+    }
+
     // Hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const target = document.getElementById(pageName);
     if (!target) {
-        // fallback to home
         document.getElementById('home').classList.add('active');
         return;
     }
@@ -52,7 +56,6 @@ function executeScripts(container) {
     const scripts = container.querySelectorAll('script');
     scripts.forEach(oldScript => {
         const newScript = document.createElement('script');
-        // Copy all attributes
         Array.from(oldScript.attributes).forEach(attr => {
             newScript.setAttribute(attr.name, attr.value);
         });

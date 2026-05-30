@@ -5,6 +5,16 @@
         <img src="images/r2.png" alt="" class="reviews-header-right" />
     </div>
     <div class="reviews-header-content">
+        <div class="ornament">
+            <svg viewBox="0 0 200 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,15 Q30,2 50,15 Q70,28 100,15 Q130,2 150,15 Q170,28 190,15" />
+                <circle cx="100" cy="15" r="3" fill="#B79A63"/>
+                <path d="M20,15 Q40,10 50,15" />
+                <path d="M150,15 Q160,10 180,15" />
+                <path d="M35,13 Q40,8 45,13" />
+                <path d="M155,13 Q160,8 165,13" />
+            </svg>
+        </div>
         <h1 class="reviews-title">FULL REVIEW COLLECTION</h1>
         <p class="reviews-subtitle">A library of thoughts, for every story told.</p>
     </div>
@@ -12,7 +22,7 @@
 
 <!-- Main reviews layout with filter sidebar -->
 <div class="reviews-container">
-    <!-- Filter sidebar on the right -->
+    <!-- Compact filter sidebar on the right -->
     <aside class="reviews-filters">
         <h3 class="filter-heading">Sort by</h3>
         <div class="filter-group">
@@ -63,7 +73,6 @@
 </div>
 
 <script>
-    // This script runs after the reviews page content is loaded.
     (function() {
         const books = [
             { title: "Powerless", author: "Lauren Roberts", rating: 4.8, genre: "fantasy", cover: "images/covers/powerless.jpg" },

@@ -1,0 +1,73 @@
+<div class="review-detail">
+    <div class="review-detail-header">
+        <div class="review-detail-cover" id="detailCover"></div>
+        <div class="review-detail-info" id="detailInfo"></div>
+    </div>
+    <div class="review-detail-body" id="detailBody"></div>
+</div>
+
+<script>
+(function() {
+    const slug = location.hash.replace('#review/', '');
+    if (!slug) return;
+
+    const books = {
+        'powerless': {
+            title: 'Powerless',
+            author: 'Lauren Roberts',
+            rating: 4.8,
+            cover: 'images/covers/powerless.jpg',
+            body: '<p>A gripping tale of power, secrets and survival…</p><p>(Full review coming soon.)</p>'
+        },
+        'the-silent-patient': {
+            title: 'The Silent Patient',
+            author: 'Alex Michaelides',
+            rating: 4.7,
+            cover: 'images/covers/the-silent-patient.jpg',
+            body: '<p>A shocking twisty thriller…</p><p>(Full review coming soon.)</p>'
+        },
+        'pride-and-prejudice': {
+            title: 'Pride and Prejudice',
+            author: 'Jane Austen',
+            rating: 4.8,
+            cover: 'images/covers/pride-and-prejudice.jpg',
+            body: '<p>A timeless romance…</p><p>(Full review coming soon.)</p>'
+        },
+        'dune': {
+            title: 'Dune',
+            author: 'Frank Herbert',
+            rating: 4.8,
+            cover: 'images/covers/dune.jpg',
+            body: '<p>An epic science fiction masterpiece…</p><p>(Full review coming soon.)</p>'
+        },
+        'dracula': {
+            title: 'Dracula',
+            author: 'Bram Stoker',
+            rating: 4.6,
+            cover: 'images/covers/dracula.jpg',
+            body: '<p>The original vampire tale…</p><p>(Full review coming soon.)</p>'
+        },
+        'the-book-thief': {
+            title: 'The Book Thief',
+            author: 'Markus Zusak',
+            rating: 4.7,
+            cover: 'images/covers/the-book-thief.jpg',
+            body: '<p>A heartbreaking story…</p><p>(Full review coming soon.)</p>'
+        },
+        // Add remaining books as needed
+    };
+
+    const book = books[slug];
+    if (book) {
+        document.getElementById('detailCover').innerHTML = `<img src="${book.cover}" alt="${book.title}" />`;
+        document.getElementById('detailInfo').innerHTML = `
+            <h2>${book.title}</h2>
+            <p class="detail-author">by ${book.author}</p>
+            <div class="detail-rating">${'★'.repeat(Math.floor(book.rating))} ${book.rating}</div>
+        `;
+        document.getElementById('detailBody').innerHTML = book.body;
+    } else {
+        document.querySelector('.review-detail').innerHTML = '<p style="text-align:center;padding:4rem;">Review not found.</p>';
+    }
+})();
+</script>

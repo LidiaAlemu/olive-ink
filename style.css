@@ -215,19 +215,16 @@ img {
 /* ===== HERO (smaller, darker overlay, elegant thin rule) ===== */
 .hero {
   position: relative;
-  /* Smaller hero height */
   min-height: 70vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* Darker overlay to separate from body */
   background: rgba(0,0,0,0.08);
   border-bottom: 1px solid rgba(183,154,99,0.2);
 }
 
-/* Subtle dark vignette for hero only */
 .hero::before {
   content: "";
   position: absolute;
@@ -236,7 +233,7 @@ img {
   z-index: 0;
 }
 
-/* Transparent PNGs layer */
+/* Transparent PNGs layer – now fill the whole hero height */
 .hero-images {
   position: absolute;
   inset: 0;
@@ -244,27 +241,35 @@ img {
   z-index: 1;
 }
 
+/* Vase image – stretches from top to bottom on the left */
 .hero-vase {
   position: absolute;
-  left: 5%;
-  bottom: 8%;
-  max-height: 60%;
-  max-width: 28%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: auto;               /* keep natural proportions */
+  max-width: 35%;
   object-fit: contain;
+  object-position: left center;
   filter: drop-shadow(0 12px 18px rgba(0,0,0,0.5));
 }
 
+/* Books image – stretches from top to bottom on the right */
 .hero-books {
   position: absolute;
-  right: 5%;
-  bottom: 6%;
-  max-height: 65%;
-  max-width: 32%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: auto;
+  max-width: 40%;
   object-fit: contain;
+  object-position: right center;
   filter: drop-shadow(0 12px 18px rgba(0,0,0,0.5));
 }
 
-/* Centred content */
+/* Centred content (over images) */
 .hero-content {
   text-align: center;
   z-index: 2;
@@ -278,10 +283,9 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.6rem;   /* tighter to title */
+  margin-bottom: 0.6rem;
 }
 
-/* Thin gold line */
 .ornament::before,
 .ornament::after {
   content: "";
@@ -291,7 +295,6 @@ img {
   max-width: 60px;
 }
 
-/* Small diamond in the centre */
 .ornament-diamond {
   display: inline-block;
   width: 8px;
@@ -301,7 +304,6 @@ img {
   margin: 0 10px;
 }
 
-/* TITLE */
 .site-title {
   font-family: var(--font-heading);
   font-size: clamp(2.8rem, 5vw, 4rem);
@@ -371,16 +373,12 @@ img {
     padding: 1rem;
   }
   .hero-vase {
-    left: 2%;
-    bottom: 5%;
-    max-height: 40%;
-    max-width: 40%;
+    max-width: 45%;
+    object-position: left center;
   }
   .hero-books {
-    right: 2%;
-    bottom: 5%;
-    max-height: 45%;
-    max-width: 45%;
+    max-width: 50%;
+    object-position: right center;
   }
   .hero-content {
     padding: 1rem;

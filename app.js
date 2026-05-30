@@ -15,9 +15,12 @@ function initRouting() {
 }
 
 async function loadPageContent(pageName) {
-    // Handle review detail pages (e.g., #review/powerless)
+    // Handle detail pages
     if (pageName.startsWith('review/')) {
         pageName = 'review-detail';
+    }
+    if (pageName.startsWith('journal/')) {
+        pageName = 'journal-detail';
     }
 
     // Hide all pages
@@ -28,7 +31,7 @@ async function loadPageContent(pageName) {
         return;
     }
 
-    // If the page hasn't been loaded yet, fetch it
+    // Fetch page if not loaded
     if (!target.dataset.loaded) {
         try {
             const response = await fetch(`pages/${pageName}.html`);
@@ -36,7 +39,6 @@ async function loadPageContent(pageName) {
             const html = await response.text();
             target.innerHTML = html;
             target.dataset.loaded = 'true';
-            // Execute any <script> tags inside the loaded content
             executeScripts(target);
         } catch (err) {
             target.innerHTML = '<p style="text-align:center;padding:4rem;">Page not found.</p>';

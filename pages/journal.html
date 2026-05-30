@@ -1,1 +1,139 @@
-<h1 style="text-align:center; padding:4rem;">Journal (coming soon)</h1>
+<!-- Journal header with images j1.png and j2.png -->
+<div class="journal-header">
+    <div class="journal-header-images">
+        <img src="images/j1.png" alt="" class="journal-header-left" />
+        <img src="images/j2.png" alt="" class="journal-header-right" />
+    </div>
+    <div class="journal-header-content">
+        <div class="ornament">
+            <svg viewBox="0 0 200 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,15 Q30,2 50,15 Q70,28 100,15 Q130,2 150,15 Q170,28 190,15" />
+                <circle cx="100" cy="15" r="3" fill="#B79A63"/>
+                <path d="M20,15 Q40,10 50,15" />
+                <path d="M150,15 Q160,10 180,15" />
+                <path d="M35,13 Q40,8 45,13" />
+                <path d="M155,13 Q160,8 165,13" />
+            </svg>
+        </div>
+        <h1 class="journal-title">FROM THE JOURNAL</h1>
+        <p class="journal-subtitle">Thoughts, reflections, and the art of reading</p>
+    </div>
+</div>
+
+<!-- Main layout: filter sidebar (right) + article cards -->
+<div class="journal-container">
+    <!-- Filter sidebar – pill buttons -->
+    <aside class="journal-filters">
+        <h3 class="filter-heading">Filter</h3>
+        <button class="journal-filter-pill active" data-filter="all">All</button>
+        <button class="journal-filter-pill" data-filter="reading-reflections">Reading Reflections</button>
+        <button class="journal-filter-pill" data-filter="literary-essays">Literary Essays</button>
+        <button class="journal-filter-pill" data-filter="reading-lifestyle">Reading Lifestyle</button>
+    </aside>
+
+    <!-- Article cards grid (clickable) -->
+    <div class="journal-articles-grid" id="journalArticles"></div>
+</div>
+
+<!-- Pagination -->
+<div class="pagination" id="journalPagination">
+    <button class="page-btn" id="prevJournalPage">Previous</button>
+    <div class="page-numbers" id="journalPageNumbers"></div>
+    <button class="page-btn" id="nextJournalPage">Next</button>
+</div>
+
+<script>
+(function() {
+    // ===== Journal data (most recent first) =====
+    const articles = [
+        { title: "Books That Changed How I Think", filter: "reading-reflections", date: "April 28, 2024", image: "images/journals/j1.png", slug: "books-that-changed-how-i-think" },
+        { title: "Why Some Stories Stay With Us", filter: "literary-essays", date: "April 22, 2024", image: "images/journals/j2.png", slug: "why-some-stories-stay-with-us" },
+        { title: "Reading During Lonely Seasons", filter: "reading-reflections", date: "April 18, 2024", image: "images/journals/j3.png", slug: "reading-during-lonely-seasons" },
+        { title: "Why Dostoevsky Still Feels Modern", filter: "literary-essays", date: "April 15, 2024", image: "images/journals/j4.png", slug: "why-dostoevsky-still-feels-modern" },
+        { title: "The Beauty of Tragic Characters", filter: "literary-essays", date: "April 10, 2024", image: "images/journals/j5.png", slug: "the-beauty-of-tragic-characters" },
+        { title: "Why Dark Academia Fascinates Readers", filter: "literary-essays", date: "April 5, 2024", image: "images/journals/j1.png", slug: "why-dark-academia-fascinates-readers" },
+        { title: "Building a Reading Habit", filter: "reading-lifestyle", date: "March 30, 2024", image: "images/journals/j2.png", slug: "building-a-reading-habit" },
+        { title: "Annotating Books", filter: "reading-lifestyle", date: "March 22, 2024", image: "images/journals/j3.png", slug: "annotating-books" },
+        { title: "Creating a Reading Space", filter: "reading-lifestyle", date: "March 15, 2024", image: "images/journals/j4.png", slug: "creating-a-reading-space" },
+        { title: "Some Stories Stay With Us For a Reason", filter: "reading-reflections", date: "March 8, 2024", image: "images/journals/j5.png", slug: "some-stories-stay-with-us-for-a-reason" }
+    ];
+
+    const perPage = 10;
+    let currentPage = 1;
+    let currentFilter = 'all';
+    const grid = document.getElementById('journalArticles');
+    const prevBtn = document.getElementById('prevJournalPage');
+    const nextBtn = document.getElementById('nextJournalPage');
+    const pageNumbers = document.getElementById('journalPageNumbers');
+
+    // Filter buttons
+    document.querySelectorAll('.journal-filter-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.journal-filter-pill').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-filter');
+            currentPage = 1;
+            render();
+        });
+    });
+
+    function render() {
+        const filtered = currentFilter === 'all' ? articles : articles.filter(a => a.filter === currentFilter);
+        const start = (currentPage - 1) * perPage;
+        const pageArticles = filtered.slice(start, start + perPage);
+
+        grid.innerHTML = '';
+        pageArticles.forEach(art => {
+            // Each card is a link to the detail page
+            const card = document.createElement('a');
+            card.href = `#journal/${art.slug}`;
+            card.className = 'journal-card'; // reuse home journal card styles
+            card.innerHTML = `
+                <div class="journal-image"><img src="${art.image}" alt="${art.title}" /></div>
+                <div class="journal-info">
+                    <span class="journal-filter">${formatFilter(art.filter)}</span>
+                    <h3 class="journal-title">${art.title}</h3>
+                    <p class="journal-date">${art.date}</p>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        updatePagination(filtered.length);
+    }
+
+    function formatFilter(f) {
+        if (f === 'reading-reflections') return 'READING REFLECTIONS';
+        if (f === 'literary-essays') return 'LITERARY ESSAY';
+        if (f === 'reading-lifestyle') return 'READING LIFE';
+        return f;
+    }
+
+    function updatePagination(total) {
+        const totalPages = Math.ceil(total / perPage);
+        pageNumbers.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+            const span = document.createElement('span');
+            span.className = 'page-num' + (i === currentPage ? ' active' : '');
+            span.textContent = i;
+            span.addEventListener('click', () => {
+                currentPage = i;
+                render();
+            });
+            pageNumbers.appendChild(span);
+        }
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) { currentPage--; render(); }
+    });
+    nextBtn.addEventListener('click', () => {
+        const total = Math.ceil((currentFilter === 'all' ? articles : articles.filter(a => a.filter === currentFilter)).length / perPage);
+        if (currentPage < total) { currentPage++; render(); }
+    });
+
+    render();
+})();
+</script>

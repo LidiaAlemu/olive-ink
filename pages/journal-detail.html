@@ -1,0 +1,89 @@
+<div class="journal-detail">
+    <!-- Left floating cards (previous / next) -->
+    <aside class="journal-nav-sidebar">
+        <div class="journal-nav-card" id="prevJournalCard"></div>
+        <div class="journal-nav-card" id="nextJournalCard"></div>
+    </aside>
+
+    <!-- Main article content -->
+    <div class="journal-detail-main">
+        <div class="journal-detail-header">
+            <div class="journal-detail-image">
+                <img id="journalDetailImage" src="" alt="" />
+            </div>
+            <div class="journal-detail-info">
+                <h2 id="journalDetailTitle"></h2>
+                <p id="journalDetailDate" class="detail-date"></p>
+                <div class="ornament">
+                    <svg viewBox="0 0 200 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10,15 Q30,2 50,15 Q70,28 100,15 Q130,2 150,15 Q170,28 190,15" />
+                        <circle cx="100" cy="15" r="3" fill="#B79A63"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="journal-detail-body" id="journalDetailBody">
+            <!-- Article text will be inserted here -->
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const slug = location.hash.replace('#journal/', '');
+    if (!slug) return;
+
+    // Dummy data for all articles (same as listing)
+    const articles = [
+        { slug: "books-that-changed-how-i-think", title: "Books That Changed How I Think", filter: "reading-reflections", date: "April 28, 2024", image: "images/journals/j1.png", body: "<p>Reflecting on the books that reshaped my worldview…</p><p>(Full article coming soon)</p>" },
+        { slug: "why-some-stories-stay-with-us", title: "Why Some Stories Stay With Us", filter: "literary-essays", date: "April 22, 2024", image: "images/journals/j2.png", body: "<p>An exploration of the emotional resonance of certain narratives…</p><p>(Full article coming soon)</p>" },
+        { slug: "reading-during-lonely-seasons", title: "Reading During Lonely Seasons", filter: "reading-reflections", date: "April 18, 2024", image: "images/journals/j3.png", body: "<p>How books became companions during quiet times…</p><p>(Full article coming soon)</p>" },
+        { slug: "why-dostoevsky-still-feels-modern", title: "Why Dostoevsky Still Feels Modern", filter: "literary-essays", date: "April 15, 2024", image: "images/journals/j4.png", body: "<p>Examining the timeless psychology in Dostoevsky’s work…</p><p>(Full article coming soon)</p>" },
+        { slug: "the-beauty-of-tragic-characters", title: "The Beauty of Tragic Characters", filter: "literary-essays", date: "April 10, 2024", image: "images/journals/j5.png", body: "<p>Why we are drawn to flawed, doomed protagonists…</p><p>(Full article coming soon)</p>" },
+        { slug: "why-dark-academia-fascinates-readers", title: "Why Dark Academia Fascinates Readers", filter: "literary-essays", date: "April 5, 2024", image: "images/journals/j1.png", body: "<p>Unpacking the aesthetic and intellectual appeal…</p><p>(Full article coming soon)</p>" },
+        { slug: "building-a-reading-habit", title: "Building a Reading Habit", filter: "reading-lifestyle", date: "March 30, 2024", image: "images/journals/j2.png", body: "<p>Practical steps to make reading a daily ritual…</p><p>(Full article coming soon)</p>" },
+        { slug: "annotating-books", title: "Annotating Books", filter: "reading-lifestyle", date: "March 22, 2024", image: "images/journals/j3.png", body: "<p>How I mark up my books and why it helps me remember…</p><p>(Full article coming soon)</p>" },
+        { slug: "creating-a-reading-space", title: "Creating a Reading Space", filter: "reading-lifestyle", date: "March 15, 2024", image: "images/journals/j4.png", body: "<p>Designing a cosy nook that invites you to read…</p><p>(Full article coming soon)</p>" },
+        { slug: "some-stories-stay-with-us-for-a-reason", title: "Some Stories Stay With Us For a Reason", filter: "reading-reflections", date: "March 8, 2024", image: "images/journals/j5.png", body: "<p>Thoughts on the lasting power of certain tales…</p><p>(Full article coming soon)</p>" }
+    ];
+
+    const currentIndex = articles.findIndex(a => a.slug === slug);
+    if (currentIndex === -1) {
+        document.querySelector('.journal-detail').innerHTML = '<p style="text-align:center;padding:4rem;">Article not found.</p>';
+        return;
+    }
+
+    const article = articles[currentIndex];
+    document.getElementById('journalDetailTitle').textContent = article.title;
+    document.getElementById('journalDetailDate').textContent = article.date;
+    document.getElementById('journalDetailImage').src = article.image;
+    document.getElementById('journalDetailBody').innerHTML = article.body;
+
+    // Previous / Next navigation
+    const prev = articles[currentIndex - 1];
+    const next = articles[currentIndex + 1];
+
+    const prevCard = document.getElementById('prevJournalCard');
+    const nextCard = document.getElementById('nextJournalCard');
+
+    if (prev) {
+        prevCard.innerHTML = `
+            <a href="#journal/${prev.slug}" class="journal-nav-link">
+                <span class="nav-label">Previous</span>
+                <p class="nav-title">${prev.title}</p>
+            </a>`;
+    } else {
+        prevCard.innerHTML = '';
+    }
+
+    if (next) {
+        nextCard.innerHTML = `
+            <a href="#journal/${next.slug}" class="journal-nav-link">
+                <span class="nav-label">Next</span>
+                <p class="nav-title">${next.title}</p>
+            </a>`;
+    } else {
+        nextCard.innerHTML = '';
+    }
+})();
+</script>

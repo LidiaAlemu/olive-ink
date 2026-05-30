@@ -1,20 +1,16 @@
 /* ===== CSS CUSTOM PROPERTIES (VINTAGE OLIVE & WINE) ===== */
 :root {
-  /* Olive background shades */
   --olive-900: #252813;
   --olive-800: #2B2B16;
   --olive-700: #36381E;
 
-  /* Burgundy / wine */
   --wine-900: #2A0105;
   --wine-800: #3E0C15;
   --wine-700: #5A1622;
 
-  /* Gold */
   --gold-500: #B79A63;
   --gold-400: #D1BA86;
 
-  /* Text */
   --cream: #E8DDC2;
 
   --font-heading: 'Playfair Display', 'Cormorant Garamond', serif;
@@ -35,10 +31,9 @@
   box-sizing: border-box;
 }
 
-/* ===== BODY BACKGROUND (less bright centre, vintage warmth) ===== */
+/* ===== BODY BACKGROUND (vintage warmth, darker) ===== */
 body {
   font-family: var(--font-body);
-  /* Darker, more muted centre – olive gradient */
   background:
     radial-gradient(
       ellipse at center,
@@ -61,13 +56,12 @@ body::before {
     radial-gradient(
       circle,
       transparent 45%,
-      rgba(183,154,99,0.06) 100%    /* gentle gold edge */
+      rgba(183,154,99,0.06) 100%
     );
   pointer-events: none;
   z-index: 0;
 }
 
-/* Make sure all content sits above vignette */
 #app {
   position: relative;
   z-index: 1;
@@ -91,7 +85,6 @@ img {
   display: block;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--olive-900); }
 ::-webkit-scrollbar-thumb { background: var(--gold-500); border-radius: 3px; }
@@ -123,16 +116,8 @@ img {
   width: 100%;
 }
 
-.logo-link {
-  display: flex;
-  align-items: center;
-}
-
-.logo-img {
-  height: 40px;
-  width: auto;
-  color: var(--cream);
-}
+.logo-link { display: flex; align-items: center; }
+.logo-img { height: 40px; width: auto; color: var(--cream); }
 
 .nav-links {
   display: flex;
@@ -151,18 +136,13 @@ img {
   font-size: 0.9rem;
   letter-spacing: 0.3px;
 }
-
 .nav-item:hover,
 .nav-item.active {
   background-color: var(--olive-700);
   color: white;
 }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+.nav-actions { display: flex; align-items: center; gap: 1rem; }
 
 .search-container {
   display: flex;
@@ -172,28 +152,15 @@ img {
   padding: 0.3rem 0.8rem;
   border: 1px solid rgba(183,154,99,0.4);
 }
-
 .search-input {
-  background: none;
-  border: none;
-  color: var(--cream);
-  font-family: var(--font-body);
-  padding: 0.5rem;
-  outline: none;
-  width: 180px;
+  background: none; border: none; color: var(--cream);
+  font-family: var(--font-body); padding: 0.5rem;
+  outline: none; width: 180px;
 }
-
-.search-input::placeholder {
-  color: var(--gold-400);
-}
-
+.search-input::placeholder { color: var(--gold-400); }
 .search-btn {
-  background: none;
-  border: none;
-  color: var(--cream);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+  background: none; border: none; color: var(--cream);
+  cursor: pointer; display: flex; align-items: center;
 }
 
 .btn-outline {
@@ -207,149 +174,150 @@ img {
   transition: var(--transition);
   font-size: 0.9rem;
 }
-
 .btn-outline:hover {
   background: var(--cream);
   color: var(--wine-700);
 }
 
-/* Hamburger menu */
+/* Hamburger */
 .hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
+  display: none; flex-direction: column; gap: 4px;
+  background: none; border: none; cursor: pointer;
 }
-
 .hamburger span {
-  width: 25px;
-  height: 2px;
-  background: var(--cream);
-  display: block;
-  transition: var(--transition);
+  width: 25px; height: 2px; background: var(--cream);
+  display: block; transition: var(--transition);
 }
 
-/* Responsive navigation */
 @media (max-width: 768px) {
   .nav-links {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 70%;
-    max-width: 300px;
-    height: 100vh;
-    background: var(--wine-800);
-    flex-direction: column;
-    padding: 5rem 2rem;
-    gap: 2rem;
+    position: fixed; top: 0; right: -100%;
+    width: 70%; max-width: 300px; height: 100vh;
+    background: var(--wine-800); flex-direction: column;
+    padding: 5rem 2rem; gap: 2rem;
     transition: right 0.3s ease;
     box-shadow: -5px 0 20px rgba(0,0,0,0.5);
   }
-  .nav-links.show {
-    right: 0;
-  }
-  .hamburger {
-    display: flex;
-    z-index: 1100;
-  }
-  .nav-actions {
-    display: none;
-  }
+  .nav-links.show { right: 0; }
+  .hamburger { display: flex; z-index: 1100; }
+  .nav-actions { display: none; }
 }
 
 /* ===== PAGES & TRANSITIONS ===== */
-.page {
-  display: none;
-  min-height: 100vh;
-}
-
-.page.active {
-  display: block;
-  animation: fadeIn 0.4s ease;
-}
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; animation: fadeIn 0.4s ease; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== HERO (transparent PNG images, no quote) ===== */
+/* ===== HERO (smaller, darker overlay, elegant thin rule) ===== */
 .hero {
   position: relative;
-  min-height: 90vh;
+  /* Smaller hero height */
+  min-height: 70vh;
   width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* background comes from body, so images sit directly on olive gradient */
+  /* Darker overlay to separate from body */
+  background: rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(183,154,99,0.2);
 }
 
-/* Container for the two transparent PNGs */
-.hero-images {
+/* Subtle dark vignette for hero only */
+.hero::before {
+  content: "";
   position: absolute;
   inset: 0;
-  pointer-events: none;  /* allow clicks through to buttons */
+  background: rgba(0,0,0,0.1);
   z-index: 0;
 }
 
-/* Left vase */
+/* Transparent PNGs layer */
+.hero-images {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .hero-vase {
   position: absolute;
   left: 5%;
-  bottom: 10%;
-  max-height: 65%;
-  max-width: 30%;
+  bottom: 8%;
+  max-height: 60%;
+  max-width: 28%;
   object-fit: contain;
   filter: drop-shadow(0 12px 18px rgba(0,0,0,0.5));
 }
 
-/* Right book still life */
 .hero-books {
   position: absolute;
   right: 5%;
-  bottom: 8%;
-  max-height: 70%;
-  max-width: 35%;
+  bottom: 6%;
+  max-height: 65%;
+  max-width: 32%;
   object-fit: contain;
   filter: drop-shadow(0 12px 18px rgba(0,0,0,0.5));
 }
 
-/* Centred content (over images) */
+/* Centred content */
 .hero-content {
   text-align: center;
-  z-index: 3;
-  padding: 0 2rem;
+  z-index: 2;
+  padding: 2rem;
   max-width: 700px;
   position: relative;
 }
 
+/* --- Elegant thin horizontal rule --- */
 .ornament {
-  font-size: 2rem;
-  color: var(--gold-500);
-  margin-bottom: 1.5rem;
-  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.6rem;   /* tighter to title */
 }
 
+/* Thin gold line */
+.ornament::before,
+.ornament::after {
+  content: "";
+  height: 1px;
+  background: var(--gold-500);
+  flex: 1;
+  max-width: 60px;
+}
+
+/* Small diamond in the centre */
+.ornament-diamond {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--gold-500);
+  transform: rotate(45deg);
+  margin: 0 10px;
+}
+
+/* TITLE */
 .site-title {
   font-family: var(--font-heading);
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(2.8rem, 5vw, 4rem);
   font-weight: 600;
   letter-spacing: 6px;
   color: var(--cream);
   text-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .tagline {
   font-family: var(--font-decor);
   font-style: italic;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   color: var(--gold-400);
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.2rem;
   letter-spacing: 1px;
 }
 
@@ -374,23 +342,13 @@ img {
 }
 
 .btn-primary {
-  background:
-    linear-gradient(
-      180deg,
-      var(--wine-700) 0%,
-      var(--wine-800) 100%
-    );
+  background: linear-gradient(180deg, var(--wine-700) 0%, var(--wine-800) 100%);
   border: 1px solid rgba(183,154,99,0.3);
   color: var(--cream);
   box-shadow: 0 4px 15px rgba(0,0,0,0.25);
 }
 .btn-primary:hover {
-  background:
-    linear-gradient(
-      180deg,
-      var(--wine-800) 0%,
-      var(--wine-700) 100%
-    );
+  background: linear-gradient(180deg, var(--wine-800) 0%, var(--wine-700) 100%);
   transform: translateY(-2px);
   box-shadow: var(--shadow-elevated);
 }
@@ -408,21 +366,27 @@ img {
 
 /* ===== RESPONSIVE HERO ===== */
 @media (max-width: 768px) {
+  .hero {
+    min-height: 75vh;
+    padding: 1rem;
+  }
   .hero-vase {
     left: 2%;
     bottom: 5%;
-    max-height: 45%;
+    max-height: 40%;
     max-width: 40%;
   }
   .hero-books {
     right: 2%;
     bottom: 5%;
-    max-height: 50%;
+    max-height: 45%;
     max-width: 45%;
   }
-  .hero {
-    min-height: 100vh;
-    justify-content: flex-start;
-    padding-top: 4rem;
+  .hero-content {
+    padding: 1rem;
+  }
+  .ornament::before,
+  .ornament::after {
+    max-width: 30px;
   }
 }

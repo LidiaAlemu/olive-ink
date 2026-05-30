@@ -1,1 +1,240 @@
-<h1 style="text-align:center; padding:4rem;">Quotes (coming soon)</h1>
+<!-- Quotes header with images q1.png and q2.png -->
+<div class="quotes-header">
+    <div class="quotes-header-images">
+        <img src="images/q1.png" alt="" class="quotes-header-left" />
+        <img src="images/q2.png" alt="" class="quotes-header-right" />
+    </div>
+    <div class="quotes-header-content">
+        <div class="ornament">
+            <svg viewBox="0 0 200 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,15 Q30,2 50,15 Q70,28 100,15 Q130,2 150,15 Q170,28 190,15" />
+                <circle cx="100" cy="15" r="3" fill="#B79A63"/>
+                <path d="M20,15 Q40,10 50,15" />
+                <path d="M150,15 Q160,10 180,15" />
+                <path d="M35,13 Q40,8 45,13" />
+                <path d="M155,13 Q160,8 165,13" />
+            </svg>
+        </div>
+        <h1 class="quotes-title">QUOTES & MUSINGS</h1>
+        <p class="quotes-subtitle">A collection of words that linger</p>
+    </div>
+</div>
+
+<!-- Main layout: filter sidebar + masonry grid -->
+<div class="quotes-container">
+    <!-- Filter sidebar (right side, compact like reviews) -->
+    <aside class="quotes-filters">
+        <h3 class="filter-heading">Filter</h3>
+
+        <div class="filter-group">
+            <button id="fanFavBtn" class="filter-btn">Fan Favorites</button>
+        </div>
+
+        <div class="filter-group">
+            <p class="filter-label">Type</p>
+            <button class="filter-type-btn active" data-type="all">All</button>
+            <button class="filter-type-btn" data-type="book">Book Quotes</button>
+            <button class="filter-type-btn" data-type="other">Other Quotes</button>
+        </div>
+    </aside>
+
+    <!-- Masonry grid (Pinterest-like) -->
+    <div class="quotes-masonry" id="quotesMasonry"></div>
+</div>
+
+<!-- Pagination -->
+<div class="pagination" id="quotesPagination">
+    <button class="page-btn" id="prevQuotePage">Previous</button>
+    <div class="page-numbers" id="quotePageNumbers"></div>
+    <button class="page-btn" id="nextQuotePage">Next</button>
+</div>
+
+<script>
+(function() {
+    // ===== Quote Data =====
+    const allQuotes = [
+        { text: "The only way out is through.", author: "Robert Frost", type: "other", likes: 12, bg: "parchment" },
+        { text: "A room without books is like a body without a soul.", author: "Cicero", type: "book", likes: 8, bg: "leather" },
+        { text: "So many books, so little time.", author: "Frank Zappa", type: "book", likes: 15, bg: "notebook" },
+        { text: "You can never get a cup of tea large enough or a book long enough to suit me.", author: "C.S. Lewis", type: "book", likes: 10, bg: "typewriter" },
+        { text: "We accept the love we think we deserve.", author: "Stephen Chbosky", type: "book", likes: 20, bg: "pressed" },
+        { text: "Not all those who wander are lost.", author: "J.R.R. Tolkien", type: "book", likes: 18, bg: "letter" },
+        { text: "It is our choices, Harry, that show what we truly are.", author: "J.K. Rowling", type: "book", likes: 14, bg: "library" },
+        { text: "The truth is rarely pure and never simple.", author: "Oscar Wilde", type: "other", likes: 7, bg: "parchment" },
+        { text: "I have always imagined that Paradise will be a kind of library.", author: "Jorge Luis Borges", type: "book", likes: 22, bg: "leather" },
+        { text: "Sometimes the smallest things take up the most room in your heart.", author: "A.A. Milne", type: "book", likes: 11, bg: "notebook" },
+        { text: "Do not go gentle into that good night.", author: "Dylan Thomas", type: "other", likes: 9, bg: "typewriter" },
+        { text: "We read to know we are not alone.", author: "C.S. Lewis", type: "book", likes: 16, bg: "pressed" },
+        { text: "Fantasy is hardly an escape from reality. It's a way of understanding it.", author: "Lloyd Alexander", type: "book", likes: 13, bg: "letter" },
+        { text: "Words are, in my not‑so‑humble opinion, our most inexhaustible source of magic.", author: "Albus Dumbledore", type: "book", likes: 19, bg: "library" },
+        { text: "The past is never dead. It's not even past.", author: "William Faulkner", type: "other", likes: 6, bg: "parchment" },
+        { text: "A person's a person, no matter how small.", author: "Dr. Seuss", type: "book", likes: 17, bg: "leather" },
+        // Add more if needed...
+    ];
+
+    const quotesPerPage = 9;  // 9 per page shows nicely in 3 columns
+    let currentPage = 1;
+    let filteredQuotes = [...allQuotes];
+    let sortByFavorites = false;
+    let currentType = 'all';
+
+    // DOM elements
+    const masonry = document.getElementById('quotesMasonry');
+    const prevBtn = document.getElementById('prevQuotePage');
+    const nextBtn = document.getElementById('nextQuotePage');
+    const pageNumbers = document.getElementById('quotePageNumbers');
+    const fanFavBtn = document.getElementById('fanFavBtn');
+    const typeBtns = document.querySelectorAll('.filter-type-btn');
+
+    // ===== LocalStorage for likes =====
+    function getUserLikes() {
+        const stored = localStorage.getItem('oliveInk_quoteLikes');
+        return stored ? JSON.parse(stored) : {};
+    }
+    function saveUserLikes(likes) {
+        localStorage.setItem('oliveInk_quoteLikes', JSON.stringify(likes));
+    }
+
+    // ===== Render quote cards =====
+    function renderQuotes() {
+        // Apply type filter
+        let quotes = allQuotes.filter(q => {
+            if (currentType === 'all') return true;
+            return q.type === currentType;
+        });
+
+        // Apply fan favorite sorting
+        if (sortByFavorites) {
+            quotes.sort((a,b) => b.likes - a.likes);
+        }
+
+        // Paginate
+        const start = (currentPage - 1) * quotesPerPage;
+        const pageQuotes = quotes.slice(start, start + quotesPerPage);
+
+        masonry.innerHTML = '';
+        pageQuotes.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = `quote-card quote-bg-${q.bg}`;
+            card.setAttribute('data-index', index);
+            card.innerHTML = `
+                <blockquote class="quote-text">"${q.text}"</blockquote>
+                <cite class="quote-author">— ${q.author}</cite>
+                <div class="quote-like-area">
+                    <button class="like-btn" data-quote-text="${q.text}">
+                        &#10084; <span class="like-count" style="display:none;">${q.likes}</span>
+                    </button>
+                </div>
+            `;
+            masonry.appendChild(card);
+        });
+
+        // Attach like button events after DOM is updated
+        attachLikeEvents();
+        updatePagination(quotes.length);
+    }
+
+    function updatePagination(totalQuotes) {
+        const totalPages = Math.ceil(totalQuotes / quotesPerPage);
+        pageNumbers.innerHTML = '';
+        // Simple display without ellipsis for now (will add if pages > 4)
+        for (let i = 1; i <= totalPages; i++) {
+            const span = document.createElement('span');
+            span.className = 'page-num' + (i === currentPage ? ' active' : '');
+            span.textContent = i;
+            span.addEventListener('click', () => {
+                currentPage = i;
+                renderQuotes();
+            });
+            pageNumbers.appendChild(span);
+        }
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+    }
+
+    function attachLikeEvents() {
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const quoteText = this.getAttribute('data-quote-text');
+                const userLikes = getUserLikes();
+                // Toggle like
+                if (userLikes[quoteText]) {
+                    // Unlike
+                    delete userLikes[quoteText];
+                    // Update global like count (simulate)
+                    const quote = allQuotes.find(q => q.text === quoteText);
+                    if (quote) quote.likes--;
+                } else {
+                    // Like
+                    userLikes[quoteText] = true;
+                    const quote = allQuotes.find(q => q.text === quoteText);
+                    if (quote) quote.likes++;
+                }
+                saveUserLikes(userLikes);
+                // Update the like button display
+                const likeCountSpan = this.querySelector('.like-count');
+                const currentLikes = allQuotes.find(q => q.text === quoteText).likes;
+                if (userLikes[quoteText]) {
+                    likeCountSpan.style.display = 'inline';
+                    likeCountSpan.textContent = currentLikes;
+                    this.classList.add('liked');
+                } else {
+                    likeCountSpan.style.display = 'none';
+                    this.classList.remove('liked');
+                }
+            });
+        });
+
+        // Show like count only if user has liked
+        const userLikes = getUserLikes();
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            const quoteText = btn.getAttribute('data-quote-text');
+            if (userLikes[quoteText]) {
+                const likeCountSpan = btn.querySelector('.like-count');
+                const currentLikes = allQuotes.find(q => q.text === quoteText).likes;
+                likeCountSpan.style.display = 'inline';
+                likeCountSpan.textContent = currentLikes;
+                btn.classList.add('liked');
+            }
+        });
+    }
+
+    // ===== Filter & Sort Events =====
+    fanFavBtn.addEventListener('click', () => {
+        sortByFavorites = !sortByFavorites;
+        fanFavBtn.classList.toggle('active', sortByFavorites);
+        currentPage = 1;
+        renderQuotes();
+    });
+
+    typeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            typeBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentType = btn.getAttribute('data-type');
+            sortByFavorites = false;
+            fanFavBtn.classList.remove('active');
+            currentPage = 1;
+            renderQuotes();
+        });
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderQuotes();
+        }
+    });
+    nextBtn.addEventListener('click', () => {
+        const total = Math.ceil(filteredQuotes.length / quotesPerPage);
+        if (currentPage < total) {
+            currentPage++;
+            renderQuotes();
+        }
+    });
+
+    // Initial render
+    renderQuotes();
+})();
+</script>

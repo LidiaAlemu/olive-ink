@@ -623,3 +623,206 @@ img { max-width:100%; height:auto; display:block; }
     padding: 0 1rem;
   }
 }
+
+/* ===== QUOTES PAGE ===== */
+.quotes-header {
+  position: relative;
+  min-height: 35vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(183,154,99,0.2);
+}
+.quotes-header-images {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.quotes-header-left {
+  position: absolute;
+  left: 5%;
+  bottom: 8%;
+  max-height: 75vh;
+  width: auto;
+  object-fit: contain;
+  object-position: left bottom;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
+  opacity: 0.85;
+}
+.quotes-header-right {
+  position: absolute;
+  right: 5%;
+  bottom: 8%;
+  max-height: 75vh;
+  width: auto;
+  object-fit: contain;
+  object-position: right bottom;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
+}
+.quotes-header-content {
+  text-align: center;
+  z-index: 1;
+  padding: 2rem;
+}
+.quotes-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--cream);
+  text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  margin-bottom: 0.5rem;
+}
+.quotes-subtitle {
+  font-family: var(--font-decor);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--gold-400);
+}
+
+/* Container: filter sidebar (right) + masonry (left) */
+.quotes-container {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 2rem;
+  max-width: 1300px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+/* Filter sidebar – compact */
+.quotes-filters {
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(183,154,99,0.25);
+  border-radius: var(--radius-card);
+  padding: 1rem;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+.filter-type-btn {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  margin-bottom: 0.4rem;
+  background: transparent;
+  border: 1px solid rgba(183,154,99,0.3);
+  border-radius: 20px;
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.filter-type-btn.active,
+.filter-type-btn:hover {
+  background: var(--wine-700);
+  border-color: var(--gold-500);
+}
+
+/* Masonry grid using CSS columns */
+.quotes-masonry {
+  column-count: 3;
+  column-gap: 1.5rem;
+}
+@media (max-width: 992px) {
+  .quotes-masonry { column-count: 2; }
+}
+@media (max-width: 768px) {
+  .quotes-masonry { column-count: 1; }
+  .quotes-container { grid-template-columns: 1fr; }
+  .quotes-filters { position: static; }
+}
+
+.quote-card {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  padding: 1.8rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
+  backdrop-filter: blur(4px);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(183,154,99,0.2);
+}
+.quote-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-elevated);
+}
+
+/* Background variations */
+.quote-bg-parchment {
+  background: linear-gradient(145deg, rgba(214,196,156,0.15), rgba(180,160,120,0.2));
+  border-color: rgba(183,154,99,0.5);
+}
+.quote-bg-leather {
+  background: linear-gradient(145deg, rgba(60,30,10,0.3), rgba(40,20,5,0.4));
+  border-color: rgba(120,80,40,0.6);
+}
+.quote-bg-notebook {
+  background: repeating-linear-gradient(transparent, transparent 19px, rgba(183,154,99,0.1) 20px);
+  background-color: rgba(30,30,20,0.3);
+}
+.quote-bg-typewriter {
+  background: rgba(220,200,170,0.1);
+  font-family: "Courier Prime", monospace;
+}
+.quote-bg-pressed {
+  background: radial-gradient(circle at 20% 30%, rgba(200,180,140,0.15) 0%, transparent 50%);
+}
+.quote-bg-letter {
+  background: rgba(240,230,210,0.1);
+  border: 1px dashed rgba(183,154,99,0.4);
+}
+.quote-bg-library {
+  background: linear-gradient(135deg, rgba(50,40,30,0.4), rgba(30,25,15,0.5));
+}
+
+.quote-text {
+  font-family: var(--font-decor);
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: var(--cream);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.quote-author {
+  display: block;
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--gold-400);
+  margin-bottom: 1rem;
+}
+.quote-like-area {
+  display: flex;
+  justify-content: flex-end;
+}
+.like-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--gold-400);
+  font-size: 1.1rem;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.like-btn.liked {
+  color: var(--wine-700);
+}
+.like-btn:hover {
+  transform: scale(1.15);
+  color: var(--wine-700);
+}
+.like-count {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--cream);
+}

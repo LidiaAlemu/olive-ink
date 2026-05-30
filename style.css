@@ -1,0 +1,56 @@
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+  --olive: #556B2F;
+  --olive-dark: #4F5B3A;
+  --burgundy: #6D1F2F;
+  --burgundy-dark: #4A1C2A;
+  --cream: #F5F1E8;
+  --beige: #DCCFC0;
+  --gold: #B89B72;
+  --text-light: #F8F6F1;
+  --text-dark: #2C2C2C;
+  --font-heading: 'Playfair Display', 'Cormorant Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-decor: 'Cormorant Garamond', serif;
+  --shadow-soft: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-elevated: 0 10px 30px rgba(0,0,0,0.12);
+  --radius-pill: 50px;
+  --radius-card: 12px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--olive);
+  color: var(--text-light);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--olive-dark); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
